@@ -7,8 +7,8 @@ function start() {
     $("#fundoGame").append("<div id='amigo' class='anima3'></div>");
     $("#fundoGame").append("<div id='placar'></div>");
     $("#fundoGame").append("<div id='energia'></div>");
-}
 
+   
 //Principais variáveis do jogo
 var jogo = {}
 var energiaAtual=3;
@@ -63,6 +63,7 @@ moveamigo();
 colisao();
 placar();
 energia();
+gameOver();
 
 
 } // Fim da função loop()
@@ -385,10 +386,10 @@ function placar() {
 	
 } //fim da função placar()
 
-//Barra de energia
+ //Barra de energia
 
-function energia() {
-	
+ function energia() {
+        
     if (energiaAtual==3) {
         
         $("#energia").css("background-image", "url(imgs/energia3.png)");
@@ -412,3 +413,30 @@ function energia() {
     }
 
 } // Fim da função energia()
+
+//Função GAME OVER
+function gameOver() {
+    fimdejogo=true;
+    musica.pause();
+    somGameover.play();
+    
+    window.clearInterval(jogo.timer);
+    jogo.timer=null;
+    
+    $("#jogador").remove();
+    $("#inimigo1").remove();
+    $("#inimigo2").remove();
+    $("#amigo").remove();
+    
+    $("#fundoGame").append("<div id='fim'></div>");
+    
+    $("#fim").html("<h1> Game Over </h1><p>Sua pontuação foi: " + pontos + "</p>" + "<div id='reinicia' onClick=reiniciaJogo()><h3>Jogar Novamente</h3></div>");
+} // Fim da função gameOver();
+
+} // Fim da função start
+function reiniciaJogo() {
+	somGameover.pause();
+	$("#fim").remove();
+	start();
+	
+} //Fim da função reiniciaJogo
